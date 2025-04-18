@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>All Users</title>
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet"/>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
+  <!-- Navbar -->
+  <%- include("./partials/navbar") %>
+
+  <div class="max-w-6xl mx-auto p-6">
+    <h1 class="text-3xl font-bold mb-6 text-center">Discover Users</h1>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+      <% users.forEach(user => { %>
+        <div class="bg-white p-6 rounded-xl shadow-md flex flex-col items-center text-center space-y-4">
+          <!-- Profile Image -->
+          <% if (user.profilepic && user.profilepic.data) { %>
+            <img
+              src="data:<%= user.profilepic.contentType %>;base64,<%= user.profilepic.data.toString('base64') %>"
+              alt="Profile Picture"
+              class="w-24 h-24 rounded-full object-cover"
+            />
+          <% } else { %>
+            <div class="w-24 h-24 bg-gray-300 rounded-full flex items-center justify-center text-xl">
+              <i class="ri-user-3-line"></i>
+            </div>
+          <% } %>
+
+          <!-- Info -->
+          <div>
+            <h2 class="text-xl font-semibold"><%= user.fullname %></h2>
+            <p class="text-gray-500"><%= user.username %></p>
+          </div>
+
+          <!-- Buttons -->
+          <div class="flex gap-3">
+            <form action="/users/follow/<%= user._id %>" method="POST">
+              <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600">
+                <% if (currentUser.following.some(f => f.toString() === user._id.toString())) { %>
+                  Unfollow
+                <% } else { %>
+                  Follow
+                <% } %>
+              </button>
+            </form>
+            <a href="/users/userprofile/<%= user._id %>" class="bg-gray-200 px-4 py-2 rounded-md hover:bg-gray-300">
+              Profile
+            </a>
+          </div>
+        </div>
+      <% }) %>
+    </div>
+  </div>
+<%- include('./partials/footer')%>

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Profile</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="/stylesheets/profile.css" />
+    <link
+    href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css"
+    rel="stylesheet"
+/>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              pinterest: '#E60023'
+            },
+          },
+        },
+      }
+    </script>
+  </head>
+  <body class="bg-gray-100 font-sans">
+    <!-- Navbar -->
+    <nav class="flex justify-between items-center bg-white shadow px-6 py-4 sticky top-0 z-50">
+        <div class="flex items-center gap-3">
+          <img
+            src="https://i.pinimg.com/originals/d3/d1/75/d3d175e560ae133f1ed5cd4ec173751a.png"
+            alt="Pin Logo"
+            class="w-10 h-10 object-contain"
+          />
+          <span class="text-xl font-bold text-pinterest text-red-600"><a href="/profile">Pinclone</a></span>
+        </div>
+        <div class="flex items-center gap-4">
+          
+          
+          <a
+            href="/users/users"
+            class=" px-4 py-2 rounded-md text-red font-medium "
+          >Users</a>
+          <a
+            href="/feed"
+            class=" px-4 py-2 rounded-md text-red font-medium "
+          >Feeds</a>
+          <a
+            href="/logout"
+            class=" px-4 py-2 rounded-md text-red-600 font-medium"
+          >Logout</a>
+        </div>
+        </div>
+  
+      </nav>
+    <!-- Profile Header -->
+    <header class="py-10 bg-white shadow-sm">
+      <div class="max-w-6xl mx-auto px-4">
+        <div class="flex flex-col md:flex-row md:items-center gap-8">
+          <div class="flex-shrink-0">
+            <% if (user.profilepic && user.profilepic.data) { %>
+              <img 
+                src="data:<%= user.profilepic.contentType %>;base64,<%= user.profilepic.data.toString('base64') %>" 
+                alt="Profile Picture"
+                class="w-36 h-36 rounded-full object-cover border-4 border-white shadow-md"
+              />
+            <% } else { %>
+              <img 
+                src="/images/default.jpg" 
+                alt="Default Profile Picture"
+                class="w-36 h-36 rounded-full object-cover border-4 border-white shadow-md"
+              />
+            <% } %>
+          </div>
+
+          <div class="flex-1">
+            <div class="flex items-center justify-between">
+              <h1 class="text-3xl font-semibold text-gray-800"><%= user.fullname %></h1>
+              <div class="flex items-center gap-3">
+                <a href="/edit" class="px-4 py-2 border border-gray-300 rounded-md text-sm hover:bg-gray-100">Edit Profile</a>
+                <a href="/users/postimage" class="px-4 py-2 border border-gray-300 rounded-md text-sm hover:bg-gray-100">Post Image</a>
+                <button class="text-gray-500 hover:text-gray-700">
+                  <i class="fas fa-cog"></i>
+                </button>
+              </div>
+            </div>
+
+            <ul class="flex gap-6 mt-4 text-gray-700">
+              <li><span class="font-semibold"><%= user.posts.length %></span> posts</li>
+              <li><span class="font-semibold"><%= user.followers.length %></span> followers</li>
+              <li><span class="font-semibold"><%= user.following.length %></span> following</li>
+            </ul>
+
+            <p class="mt-4 text-gray-600">
+              <span class="font-semibold"></span><%= user.description%>📷✈️🏕️
+            </p>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Gallery -->
+    <main class="max-w-6xl mx-auto px-4 py-10">
+      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        <% user.posts.forEach(post => { %>
+          <div class="relative group overflow-hidden rounded-lg shadow-md">
+            <img
+              src="data:<%= post.picture.contentType %>;base64,<%= post.picture.data.toString('base64') %>"
+              alt="Post image"
+              class="w-full h-64 object-cover"
+            />
+    
+            <!-- Hover Overlay -->
+            <div class="absolute inset-0 bg-black bg-opacity-40 flex flex-col justify-end opacity-0 group-hover:opacity-100 transition duration-300 px-4 py-3">
+              <!-- Buttons -->
+              <div class="flex justify-between items-center mb-2">
+                <a href="/users/like/<%= post._id %>" class="bg-white text-red-600 font-semibold px-3 py-1 text-sm rounded-full shadow hover:bg-red-100">
+                  <i class="fas fa-heart"></i><% if (post.likedby.some(f => f.toString() === user._id.toString())) { %>
+                    Unlike 
+                  <% } else { %>
+                    Like 
+                  <% } %>(<%= post.likedby.length %>)
+                </a>
+                <a href="/users/getinamge/<%= post._id %>" class="bg-white text-gray-800 font-semibold px-3 py-1 text-sm rounded-full shadow hover:bg-gray-100">
+                  <i class="fas fa-eye"></i> View
+                </a>
+              </div>
+            </div>
+          </div>
+        <% }) %>
+      </div>
+    </main>
+    
+    <%- include('./partials/footer')%>

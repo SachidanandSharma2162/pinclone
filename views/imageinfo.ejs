@@ -1,0 +1,58 @@
+<!-- views/imageinfo.ejs -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title><%= post.title %> - Image Info</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
+    <%- include('./partials/navbar')%>
+  <div class="max-w-5xl mx-auto p-6">
+    <div class="bg-white rounded-2xl shadow-lg p-6 flex flex-col md:flex-row gap-6">
+      <!-- Image -->
+      <div class="flex-shrink-0 w-full md:w-1/2">
+        <img src="data:<%= post.picture.contentType %>;base64,<%= post.picture.data.toString('base64') %>" alt="Image" class="rounded-xl w-full object-cover">
+      </div>
+
+      <!-- Info -->
+      <div class="flex-1 space-y-4">
+        <h2 class="text-2xl font-bold"><%= post.title %></h2>
+        <p class="text-gray-600 font-medium"><%= post.description %></p>
+
+        <!-- Posted By -->
+        <div class="flex items-center space-x-4">
+          <img src="data:<%= post.postedBy.profilepic.contentType %>;base64,<%= post.postedBy.profilepic.data.toString('base64') %>" class="w-10 h-10 rounded-full" />
+          <div>
+            <p class="text-gray-800 font-semibold"><%= post.postedBy.fullname %></p>
+            <a href="/users/userprofile/<%= post.postedBy._id %>" class="text-blue-500 hover:underline text-sm">View Profile</a>
+          </div>
+        </div>
+
+        <!-- Likes -->
+        <p class="text-sm text-gray-500 mt-2">❤️ <%= post.likedby.length %> people liked this</p>
+
+        <!-- Comments -->
+        <div class="mt-4">
+          <h3 class="text-lg font-semibold mb-2">Comments</h3>
+           <!-- Add Comment -->
+        <form action="/users/comment/<%= post._id %>" method="POST" class="mt-4 mb-4">
+            <textarea name="text" rows="2" placeholder="Add a comment..." class="resize-none w-full p-2 border rounded"></textarea>
+            <button type="submit" class="mt-2 bg-blue-500 text-white px-4 py-1 rounded hover:bg-blue-600">Post Comment</button>
+          </form>
+          <ul class="space-y-2">
+            <% post.comments.forEach(comment => { %>
+              <li class="bg-gray-100 p-2 rounded">
+                <strong><%= comment.user.username %>:</strong> <%= comment.text %>
+              </li>
+            <% }) %>
+          </ul>
+        </div>
+
+       
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

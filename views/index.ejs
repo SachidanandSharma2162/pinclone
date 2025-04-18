@@ -1,0 +1,50 @@
+<%- include('./partials/header')%>
+<div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
+  <% if(success.length > 0){ %>
+    <div class="fixed top-5 left-1/2 transform -translate-x-1/2 px-8 py-4 rounded-lg bg-green-500 shadow-lg text-white animate-bounce z-50">
+      ✅ <%= success %>
+    </div>
+  <% } else if(error.length > 0){ %>
+    <div class="fixed top-5 left-1/2 transform -translate-x-1/2 px-8 py-4 rounded-lg bg-red-500 shadow-lg text-white animate-bounce z-50">
+      ❌ <%= error %>
+    </div>
+  <% } %>
+
+  <div class="container">
+    <div class="content">
+      <!-- Pinterest logo -->
+      
+         <img src="https://i.pinimg.com/originals/d3/d1/75/d3d175e560ae133f1ed5cd4ec173751a.png" alt="pin logo" class="img1" />
+         <p class="header">Sign up to discover more</p>
+
+
+      <form action="/register" method="POST">
+        <input type="text" name="username" placeholder="Username" class="detail" required /><br />
+        <input type="text" name="fullname" placeholder="Full Name" class="detail" required /><br />
+        <input type="email" name="email" placeholder="Email" class="detail" required /><br />
+        <input type="password" name="password" placeholder="Password" class="detail" required /><br />
+
+        <button type="submit" class="btn int">Sign Up</button>
+      </form>
+
+      <p class="or">OR</p>
+
+      <button class="btn fbk">
+        <a href="#">Continue with <i class="ri-facebook-line font-bold" style="color: white; padding-right: 10px"></i></a>
+      </button><br />
+      <button class="btn ggl">
+        <a href="#">Continue with <i class="ri-google-line font-bold" style="color: rgb(0, 0, 0);"></i></a>
+      </button>
+
+      <footer>
+        <p>
+          By continuing, you agree to Pinterest's
+          <b>Terms of Service, Privacy policy.</b>
+        </p>
+        <hr />
+        <p>Already have an account? <a href="/login">Log in</a></p>
+      </footer>
+    </div>
+  </div>
+  <%- include('./partials/footer')%>
+

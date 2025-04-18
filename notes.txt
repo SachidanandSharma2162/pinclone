@@ -1,0 +1,4 @@
+/ route per login aur sign up hoga
+/profile pe apki profile dikhegi aur saved post, aur uploaded section hoga
+/feed me saari images dikhegi, open save kr sakte hoga
+/board/:boardname pura board dikhega
