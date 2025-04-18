@@ -51,7 +51,6 @@ Pinterest-Clone/ ├── models/ │ ├── userModel.js │ └── post
 
 ## 🧪 How to Run Locally
 
-### 1. Clone the Repo
 ```bash
 git clone https://github.com/your-username/pinterest-clone.git
 cd pinterest-clone
