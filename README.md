@@ -52,7 +52,7 @@ Pinterest-Clone/ ├── models/ │ ├── userModel.js │ └── post
 ## 🧪 How to Run Locally
 
 ```bash
-git clone https://github.com/SachidanandSharma2162/pinterest-clone.git
+git clone https://github.com/SachidanandSharma2162/pinclone.git
 cd pinterest-clone
 npm install
 mongodb://127.0.0.1:27017/pinterest
