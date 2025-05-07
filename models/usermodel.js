@@ -1,7 +1,19 @@
 const mongoose = require("mongoose");
 const plm=require("passport-local-mongoose");
 
-mongoose.connect("mongodb://127.0.0.1:27017/pinterest");
+const mongoose = require("mongoose");
+
+const dbName = "pinclone"; // The name of your database
+const dbUrl = `mongodb+srv://${process.env.DB_URL}:${process.env.DB_PASSWORD}@cluster0.4uhzkxk.mongodb.net/${dbName}?retryWrites=true&w=majority&appName=Cluster0`;
+
+mongoose.connect(dbUrl, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+}).then(() => {
+    console.log("Connected to MongoDB Atlas successfully!");
+}).catch((err) => {
+    console.error("Error connecting to MongoDB Atlas:", err);
+});
 
 const userSchema =mongoose.Schema({
     username: {
