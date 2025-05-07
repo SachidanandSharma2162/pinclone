@@ -1,8 +1,6 @@
 const mongoose = require("mongoose");
 const plm=require("passport-local-mongoose");
 
-const mongoose = require("mongoose");
-
 const dbName = "pinclone"; // The name of your database
 const dbUrl = `mongodb+srv://${process.env.DB_URL}:${process.env.DB_PASSWORD}@cluster0.4uhzkxk.mongodb.net/${dbName}?retryWrites=true&w=majority&appName=Cluster0`;
 
